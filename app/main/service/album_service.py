@@ -3,4 +3,8 @@ from app.main.model.album import Album
 
 
 def get_all_albums():
-    return Album.query.filter_by(artists='Logic').limit(10).all()
+    return Album.query.limit(30).all()
+
+
+def get_album(spotify_id):
+    return Album.query.filter_by(spotify_id=spotify_id).first()
