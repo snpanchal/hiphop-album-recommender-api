@@ -5,8 +5,7 @@ class AlbumDto:
     api = Namespace('album', description='album related operations')
     album = api.model('album', {
         'spotify_id': fields.String(required=True, description='album spotify id'),
-        'name': fields.String(required=True, description='album title'),
-        'artists': fields.String(required=True, description='album artists')
+        'name': fields.String(required=True, description='album title')
     })
 
 
@@ -24,4 +23,11 @@ class AlbumFeaturesDto:
         'speechiness': fields.Float(required=True, description='album speechiness'),
         'valence': fields.Float(required=True, description='album valence'),
         'tempo': fields.Float(required=True, description='album tempo'),
+    })
+
+class ArtistDto:
+    api = Namespace('artist', description='artist related operations')
+    artist = api.model('artist', {
+        'id': fields.Integer(required=True, description='artist id'),
+        'name': fields.String(required=True, description='artist name')
     })

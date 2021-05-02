@@ -1,6 +1,5 @@
 from app.main import db
-from app.main.model.album import Album
-
+from app.main.models import Album
 
 def get_all_albums():
     return Album.query.limit(30).all()
