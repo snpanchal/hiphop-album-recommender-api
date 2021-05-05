@@ -3,9 +3,14 @@ from flask_restx import Namespace, fields
 
 class AlbumDto:
     api = Namespace('album', description='album related operations')
+    artist = api.model('artist', {
+        'id': fields.Integer(required=True, description='artist id'),
+        'name': fields.String(required=True, description='artist name')
+    })
     album = api.model('album', {
         'spotify_id': fields.String(required=True, description='album spotify id'),
-        'name': fields.String(required=True, description='album title')
+        'name': fields.String(required=True, description='album title'),
+        'artists': fields.List(fields.Nested(artist))
     })
 
 
