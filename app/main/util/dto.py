@@ -44,8 +44,13 @@ class ArtistDto:
 
 class RecommendationsDto:
     api = Namespace('recommendations', description='album recommendations operations')
-
+    artist = api.model('artist', {
+        'id': fields.Integer(required=True, description='album id'),
+        'name': fields.String(required=True, description='artist name')
+    })
     album = api.model('album', {
         'spotify_id': fields.String(required=True, description='album spotify id'),
-        'recommendation_score': fields.Float(required=True, description='album recommendation score')
+        'name': fields.String(required=True, description='album title'),
+        'recommendation_score': fields.Float(required=True, description='album recommendation score'),
+        'artists': fields.List(fields.Nested(artist))
     })
