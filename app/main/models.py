@@ -12,6 +12,10 @@ class Album(db.Model):
     name = db.Column(db.String(255), nullable=False)
     artists = db.relationship('Artist', secondary=album_artists, backref='albums', lazy=True)
 
+    def get_row(self):
+        artists_str = '|'.join([a.name for a in self.artists])
+        return [self.spotify_id, self.name, artists_str]
+
 class Artist(db.Model):
     __tablename__ = 'artists'
 
@@ -32,3 +36,6 @@ class AlbumFeatures(db.Model):
     speechiness = db.Column(db.Float)
     valence = db.Column(db.Float)
     tempo = db.Column(db.Float)
+
+    def get_row(self):
+        return [self.spotify_id, self.acousticness, self.danceability, self.energy, self.instrumentalness, self.liveness, self.loudness, self.speechiness, self.valence, self.tempo]

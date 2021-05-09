@@ -1,10 +1,10 @@
-from flask_restx import Namespace, fields
+from flask_restx import Namespace, fields, reqparse
 
 
 class AlbumDto:
     api = Namespace('album', description='album related operations')
     artist = api.model('artist', {
-        'id': fields.Integer(required=True, description='artist id'),
+        'id': fields.Integer(required=True, description='album id'),
         'name': fields.String(required=True, description='artist name')
     })
     album = api.model('album', {
@@ -32,7 +32,20 @@ class AlbumFeaturesDto:
 
 class ArtistDto:
     api = Namespace('artist', description='artist related operations')
+    album = api.model('album', {
+        'spotify_id': fields.String(required=True, description='album spotify id'),
+        'name': fields.String(required=True, description='album title')
+    })
     artist = api.model('artist', {
         'id': fields.Integer(required=True, description='artist id'),
-        'name': fields.String(required=True, description='artist name')
+        'name': fields.String(required=True, description='artist name'),
+        'albums': fields.List(fields.Nested(album))
+    })
+
+class RecommendationsDto:
+    api = Namespace('recommendations', description='album recommendations operations')
+
+    album = api.model('album', {
+        'spotify_id': fields.String(required=True, description='album spotify id'),
+        'recommendation_score': fields.Float(required=True, description='album recommendation score')
     })

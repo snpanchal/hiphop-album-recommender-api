@@ -1,4 +1,3 @@
-from flask import request
 from flask_restx import Resource
 
 from ..util.dto import ArtistDto
@@ -22,7 +21,7 @@ class ArtistList(Resource):
 class Artist(Resource):
     @api.doc('get an artist')
     @api.marshal_with(_artist)
-    def get(self, spotify_id):
+    def get(self, artist_id):
         artist = get_artist(artist_id)
         if not artist:
             api.abort(404)
