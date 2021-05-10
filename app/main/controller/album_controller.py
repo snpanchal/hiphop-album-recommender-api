@@ -1,7 +1,7 @@
 from flask_restx import Resource
 
 from ..util.dto import AlbumDto
-from ..service.album_service import get_all_albums, get_album
+from ..service.album_service import get_all_albums, get_album, search_album
 
 api = AlbumDto.api
 _album = AlbumDto.album
@@ -10,10 +10,9 @@ _album = AlbumDto.album
 @api.route('/')
 class AlbumList(Resource):
     @api.doc('get all albums')
-    @api.marshal_list_with(_album, envelope='data')
+    @api.marshal_list_with(_album, envelope='albums')
     def get(self):
         return get_all_albums()
-
 
 @api.route('/<spotify_id>')
 @api.param('spotify_id', 'spotify id of album')
@@ -27,3 +26,13 @@ class Album(Resource):
             api.abort(404)
         else:
             return album
+
+@api.route('/search/<search_query>')
+@api.param('search_query', 'album search query')
+class AlbumSearch(Resource):
+    @api.doc('search for an album')
+    @api.marshal_list_with(_album, envelope='album_results')
+    def get(self, search_query):
+        if not search_query:
+            return []
+        return search_album(search_query)

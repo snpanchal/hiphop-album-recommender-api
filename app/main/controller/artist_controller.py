@@ -1,7 +1,7 @@
 from flask_restx import Resource
 
 from ..util.dto import ArtistDto
-from ..service.artist_service import get_all_artists, get_artist
+from ..service.artist_service import get_all_artists, get_artist, search_artist
 
 api = ArtistDto.api
 _artist = ArtistDto.artist
@@ -13,7 +13,6 @@ class ArtistList(Resource):
     @api.marshal_list_with(_artist, envelope='data')
     def get(self):
         return get_all_artists()
-
 
 @api.route('/<artist_id>')
 @api.param('artist_id', 'id of artist')
@@ -27,3 +26,13 @@ class Artist(Resource):
             api.abort(404)
         else:
             return artist
+
+@api.route('/search/<search_query>')
+@api.param('search_query', 'artist search query')
+class ArtistSearch(Resource):
+    @api.doc('search for an album')
+    @api.marshal_list_with(_artist, envelope='artist_results')
+    def get(self, search_query):
+        if not search_query:
+            return []
+        return search_artist(search_query)
