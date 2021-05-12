@@ -21,7 +21,7 @@ db_engine = create_engine(os.getenv('DATABASE_URL'))
 @api.route('/')
 class RecommendedAlbums(Resource):
     @api.doc('get recommended albums')
-    @api.marshal_list_with(_album, envelope='recommended_albums')
+    @api.marshal_list_with(_album, envelope='data')
     def put(self):
         db_con = db_engine.connect()
         df_albums = pd.read_sql_table('similarity_matrix', db_con)

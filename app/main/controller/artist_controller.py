@@ -31,7 +31,7 @@ class Artist(Resource):
 @api.param('search_query', 'artist search query')
 class ArtistSearch(Resource):
     @api.doc('search for an album')
-    @api.marshal_list_with(_artist, envelope='artist_results')
+    @api.marshal_list_with(_artist, envelope='data')
     def get(self, search_query):
         if not search_query:
             return []

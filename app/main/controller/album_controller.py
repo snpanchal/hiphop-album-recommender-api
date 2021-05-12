@@ -10,7 +10,7 @@ _album = AlbumDto.album
 @api.route('/')
 class AlbumList(Resource):
     @api.doc('get all albums')
-    @api.marshal_list_with(_album, envelope='albums')
+    @api.marshal_list_with(_album, envelope='data')
     def get(self):
         return get_all_albums()
 
@@ -31,7 +31,7 @@ class Album(Resource):
 @api.param('search_query', 'album search query')
 class AlbumSearch(Resource):
     @api.doc('search for an album')
-    @api.marshal_list_with(_album, envelope='album_results')
+    @api.marshal_list_with(_album, envelope='data')
     def get(self, search_query):
         if not search_query:
             return []
