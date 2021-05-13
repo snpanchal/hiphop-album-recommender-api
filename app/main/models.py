@@ -10,6 +10,7 @@ class Album(db.Model):
     
     spotify_id = db.Column(db.String(22), primary_key=True)
     name = db.Column(db.String(255), nullable=False)
+    image_link = db.Column(db.String(255), nullable=True)
     artists = db.relationship('Artist', secondary=album_artists, backref='albums', lazy=True)
 
     def get_row(self):

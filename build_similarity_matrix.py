@@ -1,5 +1,4 @@
 import pandas as pd
-import psycopg2
 import os
 
 from sqlalchemy import create_engine
