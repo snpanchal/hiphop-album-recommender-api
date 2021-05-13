@@ -1,16 +1,13 @@
 import pandas as pd
 import os
 
-from flask_restx import Resource, reqparse
+from flask_restx import Resource
 from flask import request
 from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.preprocessing import MinMaxScaler
-from re import search
 from sqlalchemy import create_engine
 
 from ..util.dto import RecommendationsDto
-from ..service.album_service import get_all_albums, get_albums_list
-from ..service.album_features_service import get_all_features
+from ..service.album_service import get_several_albums
 
 api = RecommendationsDto.api
 _album = RecommendationsDto.album
@@ -49,7 +46,7 @@ class RecommendedAlbums(Resource):
         recommended_albums = list(filter(filter_out_rated_albums, recommended_albums))
         recommended_albums = sorted(recommended_albums, key=lambda x: x[1], reverse=True)[:15]
         
-        recommended_album_details = get_albums_list([a[0] for a in recommended_albums])
+        recommended_album_details = get_several_albums([a[0] for a in recommended_albums])
         if not recommended_album_details:
             return []
 

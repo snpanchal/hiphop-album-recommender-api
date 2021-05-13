@@ -1,18 +1,21 @@
+from flask import request
 from flask_restx import Resource
 
 from ..util.dto import AlbumDto
-from ..service.album_service import get_all_albums, get_album, search_album
+from ..service.album_service import get_albums, get_album, search_album
 
 api = AlbumDto.api
 _album = AlbumDto.album
 
-
 @api.route('/')
+@api.doc(params={'page': {'description': 'page number', 'type': 'int', 'default': 1}})
 class AlbumList(Resource):
-    @api.doc('get all albums')
+    @api.doc('get all albums paginated')
     @api.marshal_list_with(_album, envelope='data')
     def get(self):
-        return get_all_albums()
+        page = int(request.args.get('page'))
+        res = get_albums(page)
+        return res.items
 
 @api.route('/<spotify_id>')
 @api.param('spotify_id', 'spotify id of album')
