@@ -51,6 +51,7 @@ class RecommendationsDto:
     album = api.model('album', {
         'spotify_id': fields.String(required=True, description='album spotify id'),
         'name': fields.String(required=True, description='album title'),
+        'image_link': fields.String(required=True, description='album image link'),
         'recommendation_score': fields.Float(required=True, description='album recommendation score'),
         'artists': fields.List(fields.Nested(artist))
     })

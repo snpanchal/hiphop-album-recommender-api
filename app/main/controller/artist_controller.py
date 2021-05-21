@@ -10,7 +10,7 @@ _artist = ArtistDto.artist
 @api.route('/')
 class ArtistList(Resource):
     @api.doc('get all artists')
-    @api.marshal_list_with(_artist, envelope='data')
+    @api.marshal_list_with(_artist, envelope='artists')
     def get(self):
         return get_all_artists()
 
@@ -31,7 +31,7 @@ class Artist(Resource):
 @api.param('search_query', 'artist search query')
 class ArtistSearch(Resource):
     @api.doc('search for an album')
-    @api.marshal_list_with(_artist, envelope='data')
+    @api.marshal_list_with(_artist, envelope='artistResults')
     def get(self, search_query):
         if not search_query:
             return []
